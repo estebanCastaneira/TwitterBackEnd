@@ -3,10 +3,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const express = require("express");
 
-const sessions = require("./sessions");
 const routes = require("./routes");
-const passport = require("./passport");
-const makeUserAvailableInViews = require("./middlewares/makeUserAvailableInViews");
 
 const APP_PORT = process.env.APP_PORT || 3000;
 const app = express();
@@ -14,12 +11,6 @@ const app = express();
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
-app.set("view engine", "ejs");
-
-sessions(app);
-passport(app);
-
-app.use(makeUserAvailableInViews);
 
 routes(app);
 
@@ -40,16 +31,3 @@ process.on("SIGINT", function () {
     process.exit(0);
   });
 });
-
-/**
- * Otras notas:
- *
- * El orden de las siguiente líneas de código es importante:
- *    sessions(app);
- *    passport(app);
- *    routes(app);
- *
- * No se puede usar Passport sin antes haber configurado la sessiones en Express.
- * No se puede crear rutas privadas sin antes haber configurado Passport.
- *
- */
