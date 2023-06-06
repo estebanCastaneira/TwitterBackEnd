@@ -1,0 +1,87 @@
+<aside
+  id="leftSidebar"
+  class="d-flex flex-column justify-content-between me-4 mb-4 ms-0 w-20 h-100"
+>
+  <div class="text-end text-lg-start mt-4">
+    <a class="btn mb-4 p-0" href="#" role="button"
+      ><img src="/img/icons/twitter-logo.svg" alt=""
+    /></a>
+
+    <a class="btn mb-4 p-0 border-0 d-block text-end text-lg-start" href="/" role="button"
+      ><div class="me-1 d-inline-block" style="width: 23px">
+        <img src="/img/icons/home.svg" alt="Home Icon" style="height: 21px" />
+      </div>
+      <p class="d-none d-lg-inline">Home</p></a
+    >
+
+    <a
+      class="btn mb-4 p-0 border-0 d-block text-end text-lg-start"
+      href="/<%= locals.user.username %>"
+      role="button"
+      ><div class="me-1 d-inline-block" style="width: 23px">
+        <img src="/img/icons/profile.svg" alt="Profile Icon" style="height: 21px" />
+      </div>
+      <p class="d-none d-lg-inline">Profile</p></a
+    >
+
+    <div class="text-end text-lg-start">
+      <a
+        id="sidebarTweet"
+        class="btn m-0 rounded-pill pl-3 w-100 fw-semibold text-center d-none d-lg-inline-block"
+        href="#"
+        role="button"
+        >Tweet</a
+      >
+      <a id="sidebarIconTweet" class="rounded-circle p-2 d-lg-none" href="#" role="button"
+        ><img src="../img/icons/write.svg" style="height: 21px" />
+      </a>
+    </div>
+  </div>
+
+  <!-- MODAL TWEET -->
+  <div id="myModal" class="modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <button id="closeButton" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="row mt-4">
+        <div class="col-sm-2">
+          <img
+            src="<%=locals.user.avatar%>"
+            class="img-fluid rounded-circle w-100 mb-2"
+            alt="avatar"
+          />
+        </div>
+        <div class="col-sm-10 p-0">
+          <form class="d-flex flex-column h-100" method="post" action="/tweetStore">
+            <div class="form-group flex-grow-1 p-0 modal-textarea-container">
+              <input
+                class="form-control border-0 modal-textarea"
+                name="content"
+                rows="3"
+                placeholder="What's happening?"
+              ></input>
+            </div>
+            <div class="form-group mt-auto text-end">
+              <button id="tweetButton" type="submit" class="btn btn-sm align-self-end">
+                Tweet
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-end text-lg-start">
+    <a
+      class="btn btn-danger mt-1 rounded-pill px-3 w-100 fw-semibold d-none d-lg-inline-block"
+      href="/logout"
+      role="button"
+      >Logout</a
+    >
+    <a id="sidebarIconLogout" class="rounded-circle p-2 d-lg-none" href="/logout" role="button"
+      ><img src="../img/icons/logout.svg" style="height: 21px"
+    /></a>
+  </div>
+</aside>

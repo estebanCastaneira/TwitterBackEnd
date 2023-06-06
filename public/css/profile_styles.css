@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+#profileHeader {
+  height: 200px;
+  background-color: #1d9bf0;
+}
+
+#profilePhoto {
+  position: absolute;
+  top: 100px;
+  left: 1rem;
+  z-index: 8;
+  border: 8px solid white;
+  object-fit: cover;
+}
+
+#profileInfo {
+  height: 250px;
+  /*background-color: lightblue;*/
+}
+
+#button {
+  position: absolute;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1rem;
+  background-color: #1d9bf0;
+  border: none;
+  border-radius: 40px;
+  width: 100px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  right: 1rem;
+  top: 1rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: grey;
+}
+
+#userData {
+  position: relative;
+}
+
+#tweets {
+  border-bottom: 5px solid #1d9bf0;
+  display: inline-block;
+}
+
+#userTweet {
+  height: 200px;
+}
+
+#tweetButton {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1rem;
+  background-color: #1d9bf0;
+  border: none;
+  border-radius: 40px;
+  width: 100px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  right: 1rem;
+  top: 1rem;
+}
+
+#homeHeader {
+  height: 200px;
+}
+
+textarea {
+  resize: none;
+}
