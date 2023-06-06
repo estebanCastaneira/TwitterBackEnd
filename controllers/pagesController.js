@@ -26,7 +26,9 @@ async function showHome(req, res) {
     const tweets = [];
     const following = req.user.following;
     for (const followingId of following) {
-      const followingTweets = await Tweet.find({ author: followingId }).populate("author").limit(20);
+      const followingTweets = await Tweet.find({ author: followingId })
+        .populate("author")
+        .limit(20);
       tweets.push(...followingTweets);
     }
     res.render("pages/home", {

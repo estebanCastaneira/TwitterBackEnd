@@ -1,5 +1,3 @@
-
-
 const authRoutes = require("./authRoutes");
 const userFollowsRoutes = require("./userFollowsRoutes");
 const userRoutes = require("./userRoutes");
@@ -17,11 +15,11 @@ module.exports = (app) => {
    */
 
   app.use("/", authRoutes);
-  app.use(ensureAuthenticated);
+  //   app.use(ensureAuthenticated);
 
-  app.use("/", userRoutes);
-  app.use("/", tweetRoutes);
-  app.use("/", userFollowsRoutes); // para ver /following /followers
+  //   app.use("/", userRoutes);
+  //   app.use("/", tweetRoutes);
+  //   app.use("/", userFollowsRoutes); // para ver /following /followers
 };
 
-// PD: Recordar que es muy importante el orden en que se definen las rutas.
+// PD: Recordar que es muy importante el orden en que se definen las rutas
