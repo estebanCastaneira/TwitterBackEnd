@@ -1,3 +1,5 @@
+const formidable = require("formidable");
+const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const { formatDistanceToNow, format, isSameDay } = require("date-fns");
 const { en } = require("date-fns/locale");
@@ -25,49 +27,46 @@ async function show(req, res) {}
 
 // Show the form for creating a new resource
 async function createUser(req, res) {
-  return res.json("aaaaaaa");
-  // try {
-  //   const form = formidable({
-  //     multiples: true,
-  //     uploadDir: __dirname + "/../public/img/avatars",
-  //     keepExtensions: true,
-  //   });
+  const form = formidable({
+    multiples: true,
+    uploadDir: __dirname + "/../public/img/avatars",
+    keepExtensions: true,
+  });
 
-  //   form.parse(req, async (err, fields, files) => {
-  //     const users = await User.find();
-  //     const unavalilableUser = users.some((u) => {
-  //       u.username === fields.username || u.email === fields.email;
-  //     });
-  //     if (unavalilableUser) {
-  //       req.flash("Este usuario ya existe");
-  //     } else {
-  //       const {
-  //         firstname: firstname,
-  //         lastname: lastname,
-  //         username: username,
-  //         email: email,
-  //         password: password,
-  //       } = fields;
+  form.parse(req, async (err, fields, files) => {
+    const users = await User.find();
+    const unavalilableUser = users.some((u) => {
+      u.username === fields.username || u.email === fields.email;
+    });
+    if (unavalilableUser) {
+      req.json("Este usuario ya existe");
+    } else {
+      const {
+        firstname: firstname,
+        lastname: lastname,
+        username: username,
+        email: email,
+        password: password,
+      } = fields;
 
-  //       const newUser = new User({
-  //         firstname: firstname,
-  //         lastname: lastname,
-  //         username: username,
-  //         email: email,
-  //         password: await bcrypt.hash(password, 10),
-  //         bio: "",
-  //         avatar: "img/avatars/" + files["avatar"].newFilename,
-  //         tweets: [],
-  //         following: [],
-  //         followers: [],
-  //       });
+      const newUser = new User({
+        firstname: firstname,
+        lastname: lastname,
+        username: username,
+        email: email,
+        password: await bcrypt.hash(password, 10),
+        bio: "",
+        avatar: "img/avatars/" + files.avatar.newFilename,
+        tweets: [],
+        following: [],
+        followers: [],
+      });
 
-  //       await newUser.save();
-  //     }
-  //   });
-  // } catch (error) {
-  //   console.error(error);
-  // }
+      await newUser.save();
+
+      res.json(newUser);
+    }
+  });
 }
 
 // Store a newly created resource in storage.
