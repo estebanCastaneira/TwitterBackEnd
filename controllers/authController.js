@@ -1,3 +1,4 @@
+const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -19,7 +20,6 @@ async function show(req, res) {
   const username = req.params.username;
   const user = await User.findOne({ username: username }).populate("tweets");
   console.log(username);
-
   return res.json(user);
 }
 
