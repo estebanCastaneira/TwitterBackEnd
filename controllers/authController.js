@@ -12,13 +12,16 @@ async function token(req, res) {
   if (!match) {
     return res.json("password inválida"); //TODO
   }
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_STRING);
-  return res.json({ token });
+  const token = jwt.sign({ user }, process.env.JWT_SECRET_STRING);
+  return res.json({ user: user, token: token });
 }
 
 async function show(req, res) {
-  console.log(req.auth);
-  return res.json("Cómo acceder a al info del usuario que está logueado");
+  const username = req.params.username;
+  const user = await User.findOne({ username: username }).populate("tweets");
+  console.log(username);
+
+  return res.json(user);
 }
 
 // async function logout(req, res) {
