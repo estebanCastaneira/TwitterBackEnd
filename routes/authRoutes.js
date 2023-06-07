@@ -8,7 +8,7 @@ require("dotenv").config();
  * Se sugiere usar este archivo para crear rutas relativas al proceso de
  * autenticación. Ejemplos: "/login" y "/logout".
  */
-router.post("/login", authController.token);
+router.post("/token", authController.token);
 router.get(
   "/users/profile",
   checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }),
