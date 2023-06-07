@@ -24,7 +24,51 @@ async function showProfile(req, res) {
 async function show(req, res) {}
 
 // Show the form for creating a new resource
-async function create(req, res) {}
+async function createUser(req, res) {
+  return res.json("aaaaaaa");
+  // try {
+  //   const form = formidable({
+  //     multiples: true,
+  //     uploadDir: __dirname + "/../public/img/avatars",
+  //     keepExtensions: true,
+  //   });
+
+  //   form.parse(req, async (err, fields, files) => {
+  //     const users = await User.find();
+  //     const unavalilableUser = users.some((u) => {
+  //       u.username === fields.username || u.email === fields.email;
+  //     });
+  //     if (unavalilableUser) {
+  //       req.flash("Este usuario ya existe");
+  //     } else {
+  //       const {
+  //         firstname: firstname,
+  //         lastname: lastname,
+  //         username: username,
+  //         email: email,
+  //         password: password,
+  //       } = fields;
+
+  //       const newUser = new User({
+  //         firstname: firstname,
+  //         lastname: lastname,
+  //         username: username,
+  //         email: email,
+  //         password: await bcrypt.hash(password, 10),
+  //         bio: "",
+  //         avatar: "img/avatars/" + files["avatar"].newFilename,
+  //         tweets: [],
+  //         following: [],
+  //         followers: [],
+  //       });
+
+  //       await newUser.save();
+  //     }
+  //   });
+  // } catch (error) {
+  //   console.error(error);
+  // }
+}
 
 // Store a newly created resource in storage.
 async function store(req, res) {}
@@ -43,10 +87,5 @@ async function destroy(req, res) {}
 
 module.exports = {
   showProfile,
-  show,
-  create,
-  store,
-  edit,
-  update,
-  destroy,
+  createUser,
 };
