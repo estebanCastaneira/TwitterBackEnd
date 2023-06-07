@@ -15,9 +15,9 @@ module.exports = (app) => {
    */
 
   app.use("/", authRoutes);
+  app.use("/", userRoutes);
   //   app.use(ensureAuthenticated);
 
-  //   app.use("/", userRoutes);
   //   app.use("/", tweetRoutes);
   //   app.use("/", userFollowsRoutes); // para ver /following /followers
 };
