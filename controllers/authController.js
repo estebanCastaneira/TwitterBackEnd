@@ -18,16 +18,9 @@ async function token(req, res) {
   return res.json({ user: user, token: token });
 }
 
-async function show(req, res) {
-  const username = req.params.username;
-  const user = await User.findOne({ username: username }).populate("tweets");
-  console.log(username);
-  return res.json(user);
-}
-
 // async function logout(req, res) {
 //   // req.logout(function (err) {
-//   //   if (err) {
+//   //   if (err) {node
 //   //     return next(err);
 //   //   }
 //   //   res.redirect("/");
@@ -40,7 +33,6 @@ async function show(req, res) {
 // }
 module.exports = {
   token,
-  show,
   // login,
   // loginPassport,
   // register,

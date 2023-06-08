@@ -1,5 +1,5 @@
 const authRoutes = require("./authRoutes");
-const userFollowsRoutes = require("./userFollowsRoutes");
+// const userFollowsRoutes = require("./userFollowsRoutes");
 const userRoutes = require("./userRoutes");
 const tweetRoutes = require("./tweetRoutes");
 const ensureAuthenticated = require("../middlewares/ensureAuthenticated");
@@ -15,10 +15,11 @@ module.exports = (app) => {
    */
 
   app.use("/", authRoutes);
-  app.use("/", userRoutes);
+  app.use("/users", userRoutes);
+  app.use("/tweets", tweetRoutes);
+
   //   app.use(ensureAuthenticated);
 
-  //   app.use("/", tweetRoutes);
   //   app.use("/", userFollowsRoutes); // para ver /following /followers
 };
 

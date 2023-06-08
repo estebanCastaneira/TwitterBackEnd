@@ -10,3 +10,9 @@
 //  [POST] /tweets
 //  [PATCH] /tweets/:id
 //  [DELETE] /tweets/:id
+
+//  [GET] /users
+//  [GET] /users/:id
+//  [POST] /users
+//  [PATCH] /users/:id
+//  [DELETE] /users/:id
