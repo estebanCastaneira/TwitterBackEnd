@@ -4,7 +4,9 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 async function token(req, res) {
-  const user = await User.findOne({ email: req.body.email });
+  const user = await User.findOne({
+    $or: [{ email: req.body.identifier }, { username: req.body.identifier }],
+  });
   if (!user) {
     return res.json("email inválido"); //TODO
   }

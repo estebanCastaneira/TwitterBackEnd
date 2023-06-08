@@ -36,7 +36,7 @@ async function createUser(req, res) {
   form.parse(req, async (err, fields, files) => {
     const users = await User.find();
     const unavalilableUser = users.some((u) => {
-      u.username === fields.username || u.email === fields.email;
+      return u.username === fields.username || u.email === fields.email;
     });
     if (unavalilableUser) {
       req.json("Este usuario ya existe");
