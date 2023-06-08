@@ -7,7 +7,8 @@ async function index(req, res) {
   const tweets = await Tweet.find({ author: { $in: loggedUser.following } })
     .populate("author")
     .limit(20);
-  res.json(tweets); //TODO - ordenar fecha
+    console.log(tweets);
+  return res.json(tweets); //TODO - ordenar fecha
 }
 
 async function likes(req, res) {
@@ -55,7 +56,26 @@ async function store(req, res) {
 async function edit(req, res) {}
 
 // Update the specified resource in storage.
-async function update(req, res) {}
+async function update(req, res) {
+  // const userLike = await Tweet.findOne({
+  //   _id: req.params.tweetId,
+  //   likes: req.user.id,
+  // });
+
+  // if (userLike === null) {
+  //   const likes = await Tweet.findByIdAndUpdate(req.params.tweetId, {
+  //     $push: { likes: req.user.id },
+  //   }).populate("likes");
+
+  //   res.redirect("back");
+  // } else {
+  //   const likes = await Tweet.findByIdAndUpdate(req.params.tweetId, {
+  //     $pull: { likes: req.user.id },
+  //   }).populate("likes");
+  //   res.redirect("back");
+  // }
+  res.send("llegaste hasta acá likes!!!")
+}
 
 // Remove the specified resource from storage.
 async function destroy(req, res) {
@@ -73,5 +93,5 @@ module.exports = {
   store,
   destroy,
   index,
-  likes,
+  update,
 };

@@ -10,7 +10,7 @@ router.get(
 );
 // router.get("/:id", tweetController.show);
 // router.post("/", tweetController.store);
-// router.patch("/:id", tweetController.update);
+router.patch("/:id", tweetController.update);
 // router.delete("/:id", tweetController.destroy);
 
 // // router.get("/", tweetController.index);
