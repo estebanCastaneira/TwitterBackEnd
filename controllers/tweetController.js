@@ -1,17 +1,13 @@
 const Tweet = require("../models/Tweet");
+const User = require("../models/User");
 
 // Display a listing of the resource.
 async function index(req, res) {
-  const tweets = [];
-
-  const user = req.headers.username;
-  console.log(user);
-  const following = req.user.following;
-  for (const followingId of following) {
-    const followingTweets = await Tweet.find({ author: followingId }).populate("author").limit(20);
-    tweets.push(...followingTweets);
-  }
-  res.json(tweets);
+  const loggedUser = await User.findById(req.auth.user.id);
+  const tweets = await Tweet.find({ author: { $in: loggedUser.following } })
+    .populate("author")
+    .limit(20);
+  res.json(tweets); //TODO - ordenar fecha
 }
 
 async function likes(req, res) {
