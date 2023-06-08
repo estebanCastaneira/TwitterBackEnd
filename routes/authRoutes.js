@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
-const { expressjwt: checkJwt } = require("express-jwt");
+// const { expressjwt: checkJwt } = require("express-jwt");
 require("dotenv").config();
 
 /**
@@ -9,11 +9,6 @@ require("dotenv").config();
  * autenticación. Ejemplos: "/login" y "/logout".
  */
 router.post("/token", authController.token);
-router.get(
-  "/users/:username",
-  checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }),
-  authController.show,
-);
 
 // router.get("/register", authController.register);
 // router.post("/register", authController.createUser);
