@@ -25,7 +25,7 @@ async function show(req, res) {
 
 // async function logout(req, res) {
 //   // req.logout(function (err) {
-//   //   if (err) {
+//   //   if (err) {node
 //   //     return next(err);
 //   //   }
 //   //   res.redirect("/");

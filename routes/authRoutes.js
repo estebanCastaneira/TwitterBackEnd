@@ -10,7 +10,7 @@ require("dotenv").config();
  */
 router.post("/token", authController.token);
 router.get(
-  "/users/profile/:username",
+  "/users/:username",
   checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }),
   authController.show,
 );

@@ -5,6 +5,13 @@ const { formatDistanceToNow, format, isSameDay } = require("date-fns");
 const { en } = require("date-fns/locale");
 const Tweet = require("../models/Tweet");
 
+async function show(req, res) {
+  const username = req.params.username;
+  const user = await User.findOne({ username: username }).populate("tweets");
+  console.log(username);
+  return res.json(user);
+}
+
 // Display a listing of the resource.
 async function showProfile(req, res) {
   try {
@@ -21,9 +28,6 @@ async function showProfile(req, res) {
     console.log(error);
   }
 }
-
-// Display the specified resource.
-async function show(req, res) {}
 
 // Show the form for creating a new resource
 async function createUser(req, res) {
@@ -85,6 +89,7 @@ async function destroy(req, res) {}
 // ...
 
 module.exports = {
+  show,
   showProfile,
   createUser,
 };
