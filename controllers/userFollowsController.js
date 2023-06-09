@@ -1,39 +1,39 @@
 const User = require("../models/User");
-const Tweet = require("../models/Tweet");
 const _ = require("lodash");
 
 // ============ VISTA FOLLOWING ====================
 async function indexFollowing(req, res) {
   const user = await User.findOne({ username: req.params.username }).populate("following");
-  res.render("pages/following", { user });
+  res.json({ user });
 }
 
 async function indexFollowers(req, res) {
   const user = await User.findOne({ username: req.params.username }).populate("followers");
-  res.render("pages/followers", { user });
+  res.json({ user });
 }
 
-async function followFollower(req, res) {
-  const followerId = req.params.followerId;
+async function follow(req, res) {
+  const userIdToFollow = req.params.userIdToFollow;
+
   // follow a Follower:
-  await User.findByIdAndUpdate(req.user.id, { $push: { following: followerId } });
+  await User.findByIdAndUpdate(req.auth.user.id, { $push: { following: userIdToFollow } });
   //agregamos el User como Follower
-  await User.findByIdAndUpdate(followerId, { $push: { followers: req.user.id } });
-  res.redirect(req.get("referer"));
+  await User.findByIdAndUpdate(userIdToFollow, { $push: { followers: req.auth.user.id } });
+  res.json("Follow realizado");
 }
 
 async function unFollow(req, res) {
-  const followId = req.params.followId;
+  const userIdToUnFollow = req.params.userIdToUnFollow;
 
-  await User.findByIdAndUpdate(req.user.id, { $pull: { following: followId } });
-  await User.findByIdAndUpdate(followId, { $pull: { followers: req.user.id } });
-  res.redirect(req.get("referer"));
+  await User.findByIdAndUpdate(req.auth.user.id, { $pull: { following: userIdToUnFollow } });
+  await User.findByIdAndUpdate(userIdToUnFollow, { $pull: { followers: req.auth.user.id } });
+  res.json("UnFollow realizado");
 }
 // ============ VISTA FOLLOWERS ====================
 
 module.exports = {
   indexFollowing,
   indexFollowers,
-  followFollower,
+  follow,
   unFollow,
 };

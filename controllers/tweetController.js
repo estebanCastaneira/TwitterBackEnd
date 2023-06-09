@@ -8,6 +8,7 @@ async function index(req, res) {
     .populate("author")
     .limit(20);
   console.log(tweets);
+  // console.log(tweets);
   return res.json(tweets); //TODO - ordenar fecha
 }
 
@@ -41,11 +42,14 @@ async function create(req, res) {}
 async function store(req, res) {
   try {
     const content = req.body.content;
-    await Tweet.create({
+    const newTweet = await Tweet.create({
       content: content,
-      author: req.user,
+      author: req.auth.user.id,
     });
-    res.redirect("back");
+    const user = await User.findById(req.auth.user.id);
+    user.tweets.push(newTweet._id);
+    user.save();
+    res.json(newTweet);
   } catch (error) {
     console.log(error);
   }
