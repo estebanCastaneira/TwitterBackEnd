@@ -4,23 +4,21 @@ const User = require("../models/User");
 // Display a listing of the resource.
 async function index(req, res) {
   const loggedUser = await User.findById(req.auth.user.id);
-  const tweets = await Tweet.find({ author: { $in: loggedUser.following } })
+  const tweets = await Tweet.find({
+    $or: [{ author: { $in: loggedUser.following } }, { author: loggedUser }],
+  })
     .populate("author")
     .limit(20);
   return res.json(tweets); //TODO - ordenar fecha
 }
 
 async function likes(req, res) {
-  const userLike = await Tweet.findOne({
-    _id: req.params.id,
-    likes: req.auth.user.id,
-  });
+  const tweet = await Tweet.findById(req.params.id);
 
-  if (userLike === null) {
+  if (!tweet.likes.includes(req.auth.user.id)) {
     const likeList = await Tweet.findByIdAndUpdate(req.params.id, {
       $push: { likes: req.auth.user.id },
     }).populate("likes");
-
     return res.json({ message: "Like :D", likes: likeList.likes });
   } else {
     const likeList = await Tweet.findByIdAndUpdate(req.params.id, {
@@ -82,7 +80,9 @@ async function update(req, res) {
 async function destroy(req, res) {
   try {
     await Tweet.findByIdAndDelete(req.params.id);
-    res.redirect(req.get("referer"));
+    const user = await User.findById(req.auth.id);
+    user.tweets.filter((tweet) => tweet.id !== req.params.id);
+    user.save();
   } catch (error) {
     console.log(error);
   }
