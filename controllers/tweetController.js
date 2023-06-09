@@ -7,28 +7,27 @@ async function index(req, res) {
   const tweets = await Tweet.find({ author: { $in: loggedUser.following } })
     .populate("author")
     .limit(20);
-    console.log(tweets);
+  console.log(tweets);
   return res.json(tweets); //TODO - ordenar fecha
 }
 
 async function likes(req, res) {
   const userLike = await Tweet.findOne({
-    _id: req.params.tweetId,
-    likes: req.user.id,
+    _id: req.params.id,
+    likes: req.auth.user.id,
   });
 
   if (userLike === null) {
-    const likes = await Tweet.findByIdAndUpdate(req.params.tweetId, {
-      $push: { likes: req.user.id },
+    const likeList = await Tweet.findByIdAndUpdate(req.params.id, {
+      $push: { likes: req.auth.user.id },
     }).populate("likes");
 
-    res.redirect("back");
+    return res.json({ message: "Like :D", likes: likeList.likes });
   } else {
-    const likes = await Tweet.findByIdAndUpdate(req.params.tweetId, {
-      $pull: { likes: req.user.id },
+    const likeList = await Tweet.findByIdAndUpdate(req.params.id, {
+      $pull: { likes: req.auth.user.id },
     }).populate("likes");
-
-    res.redirect("back");
+    return res.json({ message: "Dislike :(", likes: likeList.likes });
   }
 }
 
@@ -74,7 +73,7 @@ async function update(req, res) {
   //   }).populate("likes");
   //   res.redirect("back");
   // }
-  res.send("llegaste hasta acá likes!!!")
+  res.send("llegaste hasta acá likes!!!");
 }
 
 // Remove the specified resource from storage.
@@ -94,4 +93,5 @@ module.exports = {
   destroy,
   index,
   update,
+  likes,
 };

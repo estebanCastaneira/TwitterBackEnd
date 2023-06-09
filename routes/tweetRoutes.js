@@ -21,4 +21,10 @@ router.patch("/:id", tweetController.update);
 // // router.patch("/:id", tweetController.update);
 // router.delete("/delete/:id", tweetController.destroy);
 
+router.patch(
+  "/:id/like",
+  checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }),
+  tweetController.likes,
+);
+
 module.exports = router;
