@@ -7,7 +7,7 @@ async function index(req, res) {
   const tweets = await Tweet.find({ author: { $in: loggedUser.following } })
     .populate("author")
     .limit(20);
-    console.log(tweets);
+  // console.log(tweets);
   return res.json(tweets); //TODO - ordenar fecha
 }
 
@@ -74,7 +74,7 @@ async function update(req, res) {
   //   }).populate("likes");
   //   res.redirect("back");
   // }
-  res.send("llegaste hasta acá likes!!!")
+  res.send("llegaste hasta acá likes!!!");
 }
 
 // Remove the specified resource from storage.
