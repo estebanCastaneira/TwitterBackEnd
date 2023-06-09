@@ -11,7 +11,7 @@ router.get(
 // router.get("/:id", tweetController.show);
 router.post("/", checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }), tweetController.store);
 router.patch("/:id", tweetController.update);
-// router.delete("/:id", tweetController.destroy);
+router.delete("/:id", checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }), tweetController.destroy);
 
 // // router.get("/", tweetController.index);
 // //router.get("/", tweetController.create);

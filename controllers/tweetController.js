@@ -84,7 +84,9 @@ async function update(req, res) {
 async function destroy(req, res) {
   try {
     await Tweet.findByIdAndDelete(req.params.id);
-    res.redirect(req.get("referer"));
+    const user = await User.findById(req.auth.id);
+    user.tweets.filter(tweet => tweet.id !== req.params.id)
+    user.save();
   } catch (error) {
     console.log(error);
   }
