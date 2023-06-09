@@ -21,6 +21,12 @@ const tweetSchema = new Schema(
   { timestamps: true },
 );
 
+tweetSchema.methods.toJSON = function () {
+  const tweet = this.toObject();
+  tweet.id = tweet._id.toString();
+  return tweet;
+};
+
 const Tweet = mongoose.model("Tweet", tweetSchema);
 
 module.exports = Tweet;
