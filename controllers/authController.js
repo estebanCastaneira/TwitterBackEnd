@@ -15,7 +15,7 @@ async function token(req, res) {
     return res.json("password inválida"); //TODO
   }
   const token = jwt.sign({ user }, process.env.JWT_SECRET_STRING);
-  return res.json({...user, token });
+  return res.json({ ...user, token });
 }
 
 // async function logout(req, res) {

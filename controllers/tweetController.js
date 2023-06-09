@@ -7,8 +7,6 @@ async function index(req, res) {
   const tweets = await Tweet.find({ author: { $in: loggedUser.following } })
     .populate("author")
     .limit(20);
-  console.log(tweets);
-  // console.log(tweets);
   return res.json(tweets); //TODO - ordenar fecha
 }
 
