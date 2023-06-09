@@ -9,7 +9,7 @@ router.get(
   tweetController.index,
 );
 // router.get("/:id", tweetController.show);
-// router.post("/", tweetController.store);
+router.post("/", checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }), tweetController.store);
 router.patch("/:id", tweetController.update);
 // router.delete("/:id", tweetController.destroy);
 
