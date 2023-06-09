@@ -13,16 +13,12 @@ async function index(req, res) {
 }
 
 async function likes(req, res) {
-  const userLike = await Tweet.findOne({
-    _id: req.params.id,
-    likes: req.auth.user.id,
-  });
+  const tweet = await Tweet.findById(req.params.id);
 
-  if (userLike === null) {
+  if (!tweet.likes.includes(req.auth.user.id)) {
     const likeList = await Tweet.findByIdAndUpdate(req.params.id, {
       $push: { likes: req.auth.user.id },
     }).populate("likes");
-
     return res.json({ message: "Like :D", likes: likeList.likes });
   } else {
     const likeList = await Tweet.findByIdAndUpdate(req.params.id, {
