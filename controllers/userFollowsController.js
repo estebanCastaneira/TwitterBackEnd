@@ -8,7 +8,9 @@ async function indexFollowing(req, res) {
 }
 
 async function indexFollowers(req, res) {
+  console.log(req.params.username);
   const user = await User.findOne({ username: req.params.username }).populate("followers");
+  console.log(user.followers);
   res.json({ user });
 }
 
