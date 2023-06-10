@@ -91,9 +91,9 @@ async function destroy(req, res) {
 // Otros handlers...
 
 module.exports = {
-  store,
-  destroy,
   index,
-  update,
+  store,
   likes,
+  update,
+  destroy,
 };
