@@ -8,7 +8,7 @@ async function token(req, res) {
     $or: [{ email: req.body.identifier }, { username: req.body.identifier }],
   });
   if (!user) {
-    return res.json("email inválido"); //TODO
+    return res.json("email o usuario inválido"); //TODO
   }
   const match = await bcrypt.compare(req.body.password, user.password);
   if (!match) {

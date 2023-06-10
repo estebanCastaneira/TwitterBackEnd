@@ -3,13 +3,15 @@ const User = require("../models/User");
 
 // Display a listing of the resource.
 async function index(req, res) {
+  try{
   const loggedUser = await User.findById(req.auth.user.id);
   const tweets = await Tweet.find({
     $or: [{ author: { $in: loggedUser.following } }, { author: loggedUser }],
-  })
-    .populate("author")
-    .limit(20);
-  return res.json(tweets); //TODO - ordenar fecha
+  }).populate("author").limit(20)
+  return res.json(tweets);
+ }catch{
+  console.log(error);
+ } //TODO - ordenar fecha
 }
 
 async function likes(req, res) {
@@ -51,38 +53,17 @@ async function store(req, res) {
   }
 }
 
-// Show the form for editing the specified resource.
-async function edit(req, res) {}
 
-// Update the specified resource in storage.
-async function update(req, res) {
-  // const userLike = await Tweet.findOne({
-  //   _id: req.params.tweetId,
-  //   likes: req.user.id,
-  // });
 
-  // if (userLike === null) {
-  //   const likes = await Tweet.findByIdAndUpdate(req.params.tweetId, {
-  //     $push: { likes: req.user.id },
-  //   }).populate("likes");
-
-  //   res.redirect("back");
-  // } else {
-  //   const likes = await Tweet.findByIdAndUpdate(req.params.tweetId, {
-  //     $pull: { likes: req.user.id },
-  //   }).populate("likes");
-  //   res.redirect("back");
-  // }
-  res.send("llegaste hasta acá likes!!!");
-}
 
 // Remove the specified resource from storage.
 async function destroy(req, res) {
   try {
-    await Tweet.findByIdAndDelete(req.params.id);
-    const user = await User.findById(req.auth.id);
-    user.tweets.filter((tweet) => tweet.id !== req.params.id);
+    const response = await Tweet.findByIdAndDelete(req.params.id);
+    const user = await User.findById(req.auth.user.id);
+    user.tweets = user.tweets.filter((tweet) => tweet._id != req.params.id);
     user.save();
+    res.json(response)
   } catch (error) {
     console.log(error);
   }
@@ -94,6 +75,5 @@ module.exports = {
   index,
   store,
   likes,
-  update,
   destroy,
 };

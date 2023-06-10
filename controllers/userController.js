@@ -11,22 +11,8 @@ async function show(req, res) {
   return res.json(user);
 }
 
-// Display a listing of the resource.
-async function showProfile(req, res) {
-  try {
-    const user = await User.find({ username: req.params.username });
-    const tweets = await Tweet.find({ author: user }).populate("author");
-    res.render("pages/profile", {
-      isSameDay,
-      formatDistanceToNow,
-      format,
-      en,
-      tweets,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-}
+
+
 
 // Show the form for creating a new resource
 async function createUser(req, res) {
@@ -89,6 +75,5 @@ async function destroy(req, res) {}
 
 module.exports = {
   show,
-  showProfile,
   createUser,
 };

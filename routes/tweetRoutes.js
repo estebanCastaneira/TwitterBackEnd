@@ -4,15 +4,15 @@ const { expressjwt: checkJwt } = require("express-jwt");
 const tweetController = require("../controllers/tweetController");
 //const userController = require("../controllers/userController");
 
-router.use(checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }));
 
-router.get("/", tweetController.index);
+
+router.get("/", checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }), tweetController.index);
 //router.get("/:id", userController.show);
-router.post("/", tweetController.store);
-router.patch("/:id", tweetController.update);
-router.delete("/:id", tweetController.destroy);
+router.post("/", checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }), tweetController.store);
 
-router.patch("/:id/like", tweetController.likes);
+router.delete("/:id", checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }),  tweetController.destroy);
+
+router.patch("/:id/like", checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }), tweetController.likes);
 // router.patch("/:id/like",tweetController.disLikes);
 
 // const controller = require("../controllers/tweetController");
