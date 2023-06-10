@@ -47,14 +47,12 @@ async function store(req, res) {
     const user = await User.findById(req.auth.user.id);
     user.tweets.push(newTweet._id);
     user.save();
-    res.json(newTweet);
+    const tweet = await Tweet.findById(newTweet._id).populate("author");
+    res.json(tweet);
   } catch (error) {
     console.log(error);
   }
 }
-
-
-
 
 // Remove the specified resource from storage.
 async function destroy(req, res) {
