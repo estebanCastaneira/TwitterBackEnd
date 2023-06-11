@@ -2,13 +2,9 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 const tweetController = require("../controllers/tweetController");
-const { expressjwt: checkJwt } = require("express-jwt");
+const { verifyToken } = require("../middlewares/verifyToken");
 
-router.get(
-  "/:username",
-  checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }),
-  userController.show,
-);
+router.get("/:username", verifyToken, userController.show);
 
 router.post("/", userController.createUser);
 
