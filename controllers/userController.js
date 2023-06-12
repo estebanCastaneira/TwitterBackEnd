@@ -23,7 +23,7 @@ async function show(req, res, next) {
   }
 }
 
-async function createUser(req, res, next) {
+async function store(req, res, next) {
   try {
     const form = formidable({
       multiples: true,
