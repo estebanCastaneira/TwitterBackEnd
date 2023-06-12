@@ -1,7 +1,7 @@
 const Tweet = require("../models/Tweet");
 const User = require("../models/User");
 
-async function index(req, res) {
+async function index(req, res, next) {
   try {
     const loggedUser = await User.findById(req.auth.user.id);
     const tweets = await Tweet.find({
@@ -11,34 +11,32 @@ async function index(req, res) {
       .limit(20);
     return res.json(tweets);
   } catch {
-    console.log(error);
+    return next(error);
   } //TODO - ordenar fecha
 }
 
-async function likes(req, res) {
-  const tweet = await Tweet.findById(req.params.id);
+async function likes(req, res, next) {
+  try {
+    const tweet = await Tweet.findById(req.params.id);
 
-  if (!tweet.likes.includes(req.auth.user.id)) {
-    const likeList = await Tweet.findByIdAndUpdate(req.params.id, {
-      $push: { likes: req.auth.user.id },
-    }).populate("likes");
-    return res.json({ message: "Like :D", likes: likeList.likes });
-  } else {
-    const likeList = await Tweet.findByIdAndUpdate(req.params.id, {
-      $pull: { likes: req.auth.user.id },
-    }).populate("likes");
-    return res.json({ message: "Dislike :(", likes: likeList.likes });
+    if (!tweet.likes.includes(req.auth.user.id)) {
+      const likeList = await Tweet.findByIdAndUpdate(req.params.id, {
+        $push: { likes: req.auth.user.id },
+      }).populate("likes");
+      return res.json({ message: "Like :D", likes: likeList.likes });
+    } else {
+      const likeList = await Tweet.findByIdAndUpdate(req.params.id, {
+        $pull: { likes: req.auth.user.id },
+      }).populate("likes");
+      return res.json({ message: "Dislike :(", likes: likeList.likes });
+    }
+  } catch (error) {
+    return next(error);
   }
 }
 
-// Display the specified resource.
-async function show(req, res) {}
-
-// Show the form for creating a new resource
-async function create(req, res) {}
-
 // Store a newly created resource in storage.
-async function store(req, res) {
+async function store(req, res, next) {
   try {
     const content = req.body.content;
     const newTweet = await Tweet.create({
@@ -51,12 +49,12 @@ async function store(req, res) {
     const tweet = await Tweet.findById(newTweet._id).populate("author");
     res.json(tweet);
   } catch (error) {
-    console.log(error);
+    return next(error);
   }
 }
 
 // Remove the specified resource from storage.
-async function destroy(req, res) {
+async function destroy(req, res, next) {
   try {
     const response = await Tweet.findByIdAndDelete(req.params.id);
     const user = await User.findById(req.auth.user.id);
@@ -64,7 +62,7 @@ async function destroy(req, res) {
     user.save();
     res.json(response);
   } catch (error) {
-    console.log(error);
+    return next(error);
   }
 }
 
