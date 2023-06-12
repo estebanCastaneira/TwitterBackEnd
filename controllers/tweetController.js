@@ -3,15 +3,18 @@ const User = require("../models/User");
 
 // Display a listing of the resource.
 async function index(req, res) {
-  try{
-  const loggedUser = await User.findById(req.auth.user.id);
-  const tweets = await Tweet.find({
-    $or: [{ author: { $in: loggedUser.following } }, { author: loggedUser }],
-  }).populate("author").limit(20)
-  return res.json(tweets);
- }catch{
-  console.log(error);
- } //TODO - ordenar fecha
+  try {
+    const loggedUser = await User.findById(req.auth.user.id);
+    const tweets = await Tweet.find({
+      $or: [{ author: { $in: loggedUser.following } }, { author: loggedUser }],
+    })
+      .populate("author")
+      .limit(20);
+    console.log(tweets);
+    return res.json(tweets);
+  } catch {
+    console.log(error);
+  } //TODO - ordenar fecha
 }
 
 async function likes(req, res) {
@@ -61,7 +64,7 @@ async function destroy(req, res) {
     const user = await User.findById(req.auth.user.id);
     user.tweets = user.tweets.filter((tweet) => tweet._id != req.params.id);
     user.save();
-    res.json(response)
+    res.json(response);
   } catch (error) {
     console.log(error);
   }

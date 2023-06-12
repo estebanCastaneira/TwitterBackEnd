@@ -3,15 +3,15 @@ const _ = require("lodash");
 
 // ============ VISTA FOLLOWING ====================
 async function indexFollowing(req, res) {
-  const user = await User.findOne({ username: req.params.username }).populate("following");
-  res.json({ user });
+  const username = req.params.username;
+  const user = await User.findOne({ username: username }).populate("following");
+  return res.json(user);
 }
 
 async function indexFollowers(req, res) {
-  console.log(req.params.username);
-  const user = await User.findOne({ username: req.params.username }).populate("followers");
-  console.log(user.followers);
-  res.json({ user });
+  const username = req.params.username;
+  const user = await User.findOne({ username: username }).populate("followers");
+  return res.json(user);
 }
 
 async function follow(req, res) {

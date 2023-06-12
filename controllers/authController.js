@@ -8,11 +8,11 @@ async function token(req, res) {
     $or: [{ email: req.body.identifier }, { username: req.body.identifier }],
   });
   if (!user) {
-    return res.json("email o usuario inválido"); //TODO
+    return res.json("credenciales inválidas");
   }
   const match = await bcrypt.compare(req.body.password, user.password);
   if (!match) {
-    return res.json("password inválida"); //TODO
+    return res.json("credenciales inválidas");
   }
   const token = jwt.sign({ user }, process.env.JWT_SECRET_STRING);
   return res.json({ ...user, token });

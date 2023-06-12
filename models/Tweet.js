@@ -1,6 +1,5 @@
 const { mongoose, Schema } = require("../db");
 
-
 const tweetSchema = new Schema(
   {
     content: {

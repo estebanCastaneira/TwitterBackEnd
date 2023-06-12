@@ -30,7 +30,8 @@ userSchema.methods.toJSON = function () {
   const user = this.toObject();
   user.id = user._id.toString();
   delete user.password;
-  delete user._id;
+  // delete user._id;
+
   return user;
 };
 
