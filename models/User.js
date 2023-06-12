@@ -23,14 +23,14 @@ const userSchema = new Schema(
     followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     tweets: [{ type: Schema.Types.ObjectId, ref: "Tweet" }],
   },
-  { timestamps: true },
+  { timestamps: true, toObject: { virtuals: true } },
 );
 
 userSchema.methods.toJSON = function () {
   const user = this.toObject();
   user.id = user._id.toString();
   delete user.password;
-  // delete user._id;
+  delete user._id;
 
   return user;
 };
