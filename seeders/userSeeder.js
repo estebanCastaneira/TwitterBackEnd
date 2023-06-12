@@ -51,7 +51,7 @@ module.exports = async () => {
           content: faker.lorem.sentence(10),
           author: user,
           likes: user,
-          createdAt: faker.date.past()
+          createdAt: faker.date.past(),
         });
         user.tweets.push(tweet);
         tweets.push(tweet);
