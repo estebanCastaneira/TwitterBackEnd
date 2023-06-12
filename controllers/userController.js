@@ -1,9 +1,6 @@
 const formidable = require("formidable");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
-const { formatDistanceToNow, format, isSameDay } = require("date-fns");
-const { en } = require("date-fns/locale");
-const Tweet = require("../models/Tweet");
 
 async function show(req, res) {
   const username = req.params.username;
@@ -11,7 +8,7 @@ async function show(req, res) {
   return res.json(user);
 }
 
-async function createUser(req, res) {
+async function store(req, res) {
   const form = formidable({
     multiples: true,
     uploadDir: __dirname + "/../public/img/avatars",
@@ -48,7 +45,6 @@ async function createUser(req, res) {
       });
 
       await newUser.save();
-
       res.json(newUser);
     }
   });
@@ -56,5 +52,5 @@ async function createUser(req, res) {
 
 module.exports = {
   show,
-  createUser,
+  store,
 };

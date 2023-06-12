@@ -6,8 +6,7 @@ async function index(req, res) {
     const loggedUser = await User.findById(req.auth.user.id);
     const tweets = await Tweet.find({
       $or: [{ author: { $in: loggedUser.following } }, { author: loggedUser }],
-    })
-      .populate("author", "-password");
+    }).populate("author", "-password");
     return res.json(tweets);
   } catch {
     console.log(error);
@@ -29,12 +28,6 @@ async function likes(req, res) {
     return res.json({ message: "Dislike :(", likes: likeList.likes });
   }
 }
-
-// Display the specified resource.
-async function show(req, res) {}
-
-// Show the form for creating a new resource
-async function create(req, res) {}
 
 // Store a newly created resource in storage.
 async function store(req, res) {
@@ -66,8 +59,6 @@ async function destroy(req, res) {
     console.log(error);
   }
 }
-
-// Otros handlers...
 
 module.exports = {
   index,
