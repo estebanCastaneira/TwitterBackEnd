@@ -6,9 +6,7 @@ async function index(req, res, next) {
     const loggedUser = await User.findById(req.auth.user.id);
     const tweets = await Tweet.find({
       $or: [{ author: { $in: loggedUser.following } }, { author: loggedUser }],
-    })
-      .populate("author", "-password")
-      .limit(20);
+    }).populate("author", "-password");
     return res.json(tweets);
   } catch {
     return next(error);
@@ -44,9 +42,9 @@ async function store(req, res, next) {
       author: req.auth.user.id,
     });
     const user = await User.findById(req.auth.user.id);
-    user.tweets.push(newTweet._id);
+    user.tweets.push(newTweet.id);
     user.save();
-    const tweet = await Tweet.findById(newTweet._id).populate("author");
+    const tweet = await Tweet.findById(newTweet.id).populate("author");
     res.json(tweet);
   } catch (error) {
     return next(error);
