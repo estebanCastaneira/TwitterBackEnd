@@ -7,12 +7,11 @@ async function index(req, res) {
     const tweets = await Tweet.find({
       $or: [{ author: { $in: loggedUser.following } }, { author: loggedUser }],
     })
-      .populate("author", "-password")
-      .limit(20);
+      .populate("author", "-password");
     return res.json(tweets);
   } catch {
     console.log(error);
-  } //TODO - ordenar fecha
+  }
 }
 
 async function likes(req, res) {
