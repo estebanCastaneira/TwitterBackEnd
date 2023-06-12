@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const userFollowsController = require("../controllers/userFollowsController");
-const { expressjwt: checkJwt } = require("express-jwt");
+const { verifyToken } = require("../middlewares/verifyToken");
 
-router.use(checkJwt({ secret: process.env.JWT_SECRET_STRING, algorithms: ["HS256"] }));
+router.use(verifyToken);
 router.get("/following/:username", userFollowsController.indexFollowing);
 router.get("/followers/:username", userFollowsController.indexFollowers);
 router.patch("/follow/:userIdToFollow", userFollowsController.follow);

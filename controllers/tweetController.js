@@ -1,16 +1,14 @@
 const Tweet = require("../models/Tweet");
 const User = require("../models/User");
 
-// Display a listing of the resource.
 async function index(req, res) {
   try {
     const loggedUser = await User.findById(req.auth.user.id);
     const tweets = await Tweet.find({
       $or: [{ author: { $in: loggedUser.following } }, { author: loggedUser }],
     })
-      .populate("author")
+      .populate("author", "-password")
       .limit(20);
-    console.log(tweets);
     return res.json(tweets);
   } catch {
     console.log(error);
