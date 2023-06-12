@@ -46,9 +46,9 @@ async function store(req, res) {
       author: req.auth.user.id,
     });
     const user = await User.findById(req.auth.user.id);
-    user.tweets.push(newTweet._id);
+    user.tweets.push(newTweet.id);
     user.save();
-    const tweet = await Tweet.findById(newTweet._id).populate("author");
+    const tweet = await Tweet.findById(newTweet.id).populate("author");
     res.json(tweet);
   } catch (error) {
     console.log(error);
