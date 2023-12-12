@@ -29,7 +29,7 @@ async function runAllSeeders() {
   // Seeders:
 
   await require("./userSeeder")();
-  await require("./tweetSeeder")();
+  // await require("./tweetSeeder")();
 
   console.log("[Database] ¡Los datos de prueba fueron insertados!");
   process.exit();
