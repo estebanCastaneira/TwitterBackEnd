@@ -31,9 +31,7 @@ async function follow(req, res, next) {
   try {
     const userIdToFollow = req.params.userIdToFollow;
 
-    // follow a Follower:
     await User.findByIdAndUpdate(req.auth.user.id, { $push: { following: userIdToFollow } });
-    //agregamos el User como Follower
     await User.findByIdAndUpdate(userIdToFollow, { $push: { followers: req.auth.user.id } });
 
     if (!User) {
